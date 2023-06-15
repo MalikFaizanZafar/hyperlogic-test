@@ -19,6 +19,12 @@ mongoose.connect('mongodb+srv://malikfaizanzafar1993:wzfnT7rJCcNRDEnt@cluster0.u
 const todoSchema = new mongoose.Schema({ title: String, description: String, status: String }, { timestamps: true });
 const Todo = mongoose.model('Todo', todoSchema);
 
+
+//Health Check
+app.get('/', (req, res) => {
+    res.status(200).json({message: 'Server is Live'})
+})
+
 // Adding Todo
 app.post("/todos", async(req, res) => {
     try{
