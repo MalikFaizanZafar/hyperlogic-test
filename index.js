@@ -11,7 +11,7 @@ app.use(express.urlencoded({
 
 
 // Connecting to MongoDB
-mongoose.connect('mongodb+srv://malikfaizanzafar1993:wzfnT7rJCcNRDEnt@cluster0.utfa8cz.mongodb.net/?retryWrites=true&w=majority', {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect(process.env.MONGO_DB_URI, {useNewUrlParser: true, useUnifiedTopology: true});
 
 
 
@@ -31,14 +31,7 @@ app.post("/todos", async(req, res) => {
         const { body: { title, description, status} } = req;
         const newTodo = new Todo({ title, description, status });
         const savedTodo = await newTodo.save();
-        return res.status(200).json({
-            id: savedTodo.id,
-            title: savedTodo.title, 
-            description: savedTodo.description, 
-            status: savedTodo.status,
-            createdAt: savedTodo.createdAt,
-            updatedAt: savedTodo.updatedAt,
-        })
+        return res.status(200).json(savedTodo)
     }catch(err){
         res.status(500).json(err);
     }
