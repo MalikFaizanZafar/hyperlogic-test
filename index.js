@@ -43,15 +43,7 @@ app.post("/todos", async(req, res) => {
 // Getting list of Todos
 app.get("/todos",async(req, res) => {
     try{
-        const pageOptions = {
-            page: parseInt(req.query.page, 10) || 0,
-            limit: parseInt(req.query.limit, 10) || 10
-        }
         const todos = await Todo.find()
-        .skip(pageOptions.page * pageOptions.limit)
-        .limit(pageOptions.limit)
-        .exec();
-
         res.status(200).json(todos);
     }catch(err){
         res.status(500).json(err);
